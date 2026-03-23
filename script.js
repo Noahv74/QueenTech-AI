@@ -1,65 +1,90 @@
-// قاعدة بيانات تجريبية (هنكبرها مع الوقت أو نربطها بـ AI)
-const mobileSolutions = {
-    "a54": {
-        title: "تخطي حماية FRP لجهاز Samsung A54 (U5)",
-        warning: "يحتاج هذا الموديل إلى Test Point ودقة في التعامل مع نقط الـ EDL.",
-        steps: [
-            "فك ظهر الجهاز للوصول لنقاط الـ Test Point.",
-            "استخدم كابل EDL أصلي لضمان استقرار التفليش.",
-            "افتح أداة UnlockTool واختار خانة Samsung ثم Eraser FRP.",
-            "وصل النقاط بملقاط (Tweezers) ثم وصل الكابل بالكمبيوتر."
-        ],
-        files: ["صورة نقاط الـ Test Point", "ملف الـ Loader الخاص بـ A54"]
-    },
-    "a10": {
-        title: "حل مشكلة الـ Bootloop لجهاز Samsung A10",
-        warning: "تأكد من شحن البطارية فوق 50% قبل البدء.",
-        steps: [
-            "حمل روم أربع ملفات (Repair Firmware) لنفس الحماية.",
-            "استخدم برنامج Odin (إصدار 3.14 أو أحدث).",
-            "ادخل الجهاز في وضع الـ Download Mode.",
-            "ضع الملفات في خاناتها (BL, AP, CP, CSC) واضغط Start."
-        ],
-        files: ["رابط تحميل روم A10 الرسمي", "برنامج Odin 3.14.4"]
+let solutionsData = [];
+
+// تحميل الداتا أول ما الصفحة تفتح
+window.onload = async function() {
+    try {
+        const response = await fetch('solutions.json');
+        solutionsData = await response.json();
+    } catch (error) {
+        console.error("مشكلة في تحميل الداتا:", error);
     }
 };
 
-function simulateSearch() {
-    const input = document.getElementById('searchInput').value.toLowerCase();
-    const solutionSheet = document.getElementById('solution-sheet');
-    const btn = document.querySelector('.search-btn');
+const searchInput = document.getElementById('searchInput');
+const autocompleteList = document.getElementById('autocomplete-list');
 
-    if (input.trim() === "") {
-        alert("اكتب الموديل يا بطل!");
+// مراقبة الكتابة في شريط البحث
+searchInput.addEventListener('input', function() {
+    const val = this.value.toLowerCase().trim();
+    autocompleteList.innerHTML = ''; 
+    
+    if (!val) {
+        document.getElementById('solution-sheet').style.display = 'none';
         return;
     }
 
-    // حركة التحميل
+    // فلترة النتايج
+    const matches = solutionsData.filter(item => 
+        item.model.toLowerCase().includes(val) || 
+        item.title.toLowerCase().includes(val)
+    );
+
+    // بناء القائمة
+    matches.forEach(match => {
+        const div = document.createElement('div');
+        div.innerHTML = `<i class="fas fa-mobile-alt me-2 text-secondary"></i> <strong>${match.model.toUpperCase()}</strong> - ${match.title}`;
+        
+        div.addEventListener('click', function() {
+            searchInput.value = match.model; 
+            autocompleteList.innerHTML = ''; 
+            displaySolution(match); 
+        });
+        autocompleteList.appendChild(div);
+    });
+});
+
+// إخفاء القائمة لو ضغط بره
+document.addEventListener('click', function(e) {
+    if (e.target !== searchInput) {
+        autocompleteList.innerHTML = '';
+    }
+});
+
+function setSearch(text) {
+    searchInput.value = text;
+    simulateSearch();
+}
+
+function simulateSearch() {
+    const val = searchInput.value.toLowerCase().trim();
+    const btn = document.querySelector('.search-btn');
+
+    if (!val) {
+        alert("اكتب اسم الموديل الأول يا هندسة!");
+        return;
+    }
+    
+    const match = solutionsData.find(item => 
+        item.model.toLowerCase().includes(val) || item.title.toLowerCase().includes(val)
+    );
+
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري البحث...';
 
     setTimeout(() => {
         btn.innerHTML = 'ابحث عن الحل';
-        
-        // البحث في قاعدة البيانات
-        let found = false;
-        for (let key in mobileSolutions) {
-            if (input.includes(key)) {
-                displaySolution(mobileSolutions[key]);
-                found = true;
-                break;
-            }
+        if (match) {
+            autocompleteList.innerHTML = '';
+            displaySolution(match);
+        } else {
+            alert('الموديل ده لسه مش متسجل في الصيدلية يا هندسة.');
+            document.getElementById('solution-sheet').style.display = 'none';
         }
-
-        if (!found) {
-            alert("الحل ده لسه مضافش في الداتابيز، بس جرب تبحث بـ 'A54' أو 'A10' عشان تشوف التجربة.");
-        }
-    }, 1000);
+    }, 800);
 }
 
 function displaySolution(data) {
     const solutionSheet = document.getElementById('solution-sheet');
     
-    // تحديث البيانات في الصفحة
     solutionSheet.innerHTML = `
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -82,5 +107,5 @@ function displaySolution(data) {
         </div>
     `;
     solutionSheet.style.display = 'block';
-    solutionSheet.scrollIntoView({ behavior: 'smooth' });
+    solutionSheet.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }

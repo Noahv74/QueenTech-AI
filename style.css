@@ -1,0 +1,31 @@
+/* تنسيق قائمة الاقتراحات (Autocomplete) */
+.search-box { position: relative; } /* مهم جداً عشان القائمة تنزل تحتها مظبوط */
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border-radius: 0 0 25px 25px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0,32,74,0.15);
+    background: #fff;
+    max-height: 300px;
+    overflow-y: auto; /* عشان لو النتايج كتير يعمل سكرول */
+}
+.autocomplete-items div {
+    padding: 15px 25px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #f1f1f1;
+    text-align: right;
+    font-size: 1.1rem;
+    color: var(--royal-blue);
+    font-weight: 600;
+}
+.autocomplete-items div:hover {
+    background-color: #f8faff;
+    color: var(--gold-accent);
+}

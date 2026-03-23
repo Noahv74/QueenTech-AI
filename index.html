@@ -23,31 +23,32 @@
             color: #333;
         }
 
-        /* المنيو البسيط */
+        /* المنيو */
         .navbar { background-color: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 10px 0; }
         .logo-img { height: 50px; width: auto; }
         .credits-badge { background-color: var(--royal-blue); color: white; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;}
         .credits-badge i { color: var(--gold-accent); }
 
-        /* منطقة البحث (محرك البحث) */
+        /* منطقة البحث */
         .search-container { margin-top: 8vh; text-align: center; }
         .search-title { color: var(--royal-blue); font-weight: 800; font-size: 2.5rem; margin-bottom: 10px; }
         .search-subtitle { color: #666; margin-bottom: 30px; font-size: 1.1rem; }
         
+        /* صندوق البحث وقائمة الاقتراحات */
+        .search-wrapper { max-width: 700px; margin: 0 auto; position: relative; }
         .search-box {
-            max-width: 700px;
-            margin: 0 auto;
             position: relative;
             box-shadow: 0 10px 30px rgba(0,32,74,0.1);
             border-radius: 50px;
             background: white;
             padding: 5px;
             display: flex;
+            z-index: 100;
         }
         .search-input {
             border: none;
             border-radius: 50px;
-            padding: 15px 25px;
+            padding: 15px 25px 15px 50px;
             font-size: 1.1rem;
             width: 100%;
             outline: none;
@@ -62,19 +63,49 @@
             font-weight: bold;
             font-size: 1.1rem;
             transition: 0.3s;
+            white-space: nowrap;
         }
         .search-btn:hover { background-color: #8e740d; }
 
+        /* تنسيق الـ Autocomplete السحري */
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-top: none;
+            z-index: 99;
+            top: 55px; /* عشان تنزل تحت الصندوق بالظبط */
+            left: 20px;
+            right: 20px;
+            border-radius: 0 0 20px 20px;
+            overflow-y: auto;
+            max-height: 250px;
+            box-shadow: 0 15px 30px rgba(0,32,74,0.15);
+            background: #fff;
+            text-align: right;
+        }
+        .autocomplete-items div {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f1f1;
+            font-weight: 600;
+            color: var(--royal-blue);
+            transition: 0.2s;
+        }
+        .autocomplete-items div:hover {
+            background-color: #f8faff;
+            color: var(--gold-accent);
+        }
+
         /* الفلاتر السريعة */
-        .quick-filters { margin-top: 25px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .quick-filters { margin-top: 35px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .filter-chip {
             background: white; border: 1px solid #ddd; padding: 8px 15px; border-radius: 20px;
             font-size: 0.9rem; color: #555; cursor: pointer; transition: 0.2s;
         }
         .filter-chip:hover { border-color: var(--royal-blue); color: var(--royal-blue); background: #eef2f9; }
 
-        /* كارت الحل (The Solution Sheet) - مخفي في البداية */
-        #solution-sheet { display: none; margin-top: 40px; animation: fadeIn 0.5s; }
+        /* كارت الحل */
+        #solution-sheet { display: none; margin-top: 40px; animation: fadeIn 0.5s; padding-bottom: 50px; }
         .solution-card { background: white; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); padding: 30px; border-top: 5px solid var(--royal-blue); text-align: right;}
         .warning-box { background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; border-right: 4px solid #ffeeba; margin-bottom: 20px; font-weight: 600;}
         .step-item { margin-bottom: 15px; font-size: 1.1rem; }
@@ -88,13 +119,10 @@
     <nav class="navbar sticky-top">
         <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="images/logo.png" alt="Queen Tech" class="logo-img">
+                <img src="images/logo.png" alt="Queen Tech" class="logo-img" onerror="this.src='https://via.placeholder.com/50'">
                 <span class="ms-2 fw-bold" style="color: var(--royal-blue); font-size: 1.3rem;">QUEEN TECH <span style="color: var(--gold-accent);">AI</span></span>
             </a>
-            
-            <div class="credits-badge">
-                <i class="fas fa-coins me-1"></i> رصيدك: ١٥ نقطة
-            </div>
+            <div class="credits-badge"><i class="fas fa-coins me-1"></i> رصيدك: ١٥ نقطة</div>
         </div>
     </nav>
 
@@ -102,75 +130,26 @@
         <h1 class="search-title">صيدلية السوفتوير</h1>
         <p class="search-subtitle">اكتب نوع الجهاز والمشكلة، والذكاء الاصطناعي هيجيبلك الخلاصة والملفات.</p>
 
-        <div class="search-box">
-            <i class="fas fa-search" style="position: absolute; right: 25px; top: 22px; color: #aaa;"></i>
-            <input type="text" id="searchInput" class="search-input" placeholder="مثال: تخطي حماية FRP لجهاز Samsung A54 حماية U5..." style="padding-right: 50px;">
-            <button class="search-btn" onclick="simulateSearch()">ابحث عن الحل</button>
+        <div class="search-wrapper">
+            <div class="search-box">
+                <i class="fas fa-search" style="position: absolute; right: 20px; top: 22px; color: #aaa; z-index: 101;"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="مثال: تخطي حماية FRP لجهاز Samsung A54..." autocomplete="off">
+                <button class="search-btn" onclick="simulateSearch()">ابحث عن الحل</button>
+            </div>
+            <div id="autocomplete-list" class="autocomplete-items"></div>
         </div>
 
         <div class="quick-filters">
-            <span class="filter-chip" onclick="setSearch('مشكلة Bootloop معالج MTK')"><i class="fas fa-microchip text-primary"></i> معالجات MTK</span>
-            <span class="filter-chip" onclick="setSearch('تخطي حساب شاومي Mi Account')"><i class="fas fa-unlock text-danger"></i> Mi Account</span>
-            <span class="filter-chip" onclick="setSearch('ملف NV Data Corrupted')"><i class="fas fa-database text-success"></i> NV Data Repair</span>
-            <span class="filter-chip" onclick="setSearch('نقاط Test Point Qualcomm')"><i class="fas fa-bolt text-warning"></i> Test Point</span>
+            <span class="filter-chip" onclick="setSearch('a54')"><i class="fas fa-microchip text-primary"></i> Samsung A54</span>
+            <span class="filter-chip" onclick="setSearch('note 10')"><i class="fas fa-unlock text-danger"></i> Mi Account Note 10</span>
+            <span class="filter-chip" onclick="setSearch('iphone x')"><i class="fab fa-apple text-dark"></i> iCloud Bypass</span>
         </div>
     </div>
 
-    <div class="container" id="solution-sheet">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="solution-card">
-                    <h3 class="fw-bold mb-3" style="color: var(--royal-blue);"><i class="fas fa-check-circle text-success"></i> تقرير الحل: تخطي FRP سامسونج A54 (U5)</h3>
-                    
-                    <div class="warning-box">
-                        <i class="fas fa-exclamation-triangle"></i> <strong>تحذير للفني:</strong> هذا التوجيه يحتاج إلى كابل EDl أو أداة Test Point. لا تقم بالتفليش العادي لتجنب تلف شاشة الـ Boot.
-                    </div>
+    <div class="container" id="solution-sheet"></div>
 
-                    <h5 class="fw-bold mt-4 mb-3">خطوات العمل (لغة الصنايعية):</h5>
-                    <div class="step-item"><span class="step-number">1</span> فك ظهر الجهاز ووصل نقطتين الـ Test Point الموضحين في مسار البوردة.</div>
-                    <div class="step-item"><span class="step-number">2</span> افتح أداة UnlockTool أو أي أداة تدعم معالجات Exynos 1380.</div>
-                    <div class="step-item"><span class="step-number">3</span> اختار موديل (SM-A546E) واضغط على <code>Erase FRP (EDL)</code>.</div>
-                    <div class="step-item"><span class="step-number">4</span> وصل الكابل، والبرنامج هيسحب الـ Loader ويفك الحماية في ثواني.</div>
-
-                    <hr class="my-4">
-
-                    <h5 class="fw-bold mb-3">الملفات والأدوات المطلوبة:</h5>
-                    <a href="#" class="btn btn-outline-primary me-2 mb-2"><i class="fas fa-download"></i> صورة الـ Test Point</a>
-                    <a href="#" class="btn btn-outline-success mb-2"><i class="fas fa-external-link-alt"></i> شراء تفعيل UnlockTool</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function setSearch(text) {
-            document.getElementById('searchInput').value = text;
-        }
-
-        function simulateSearch() {
-            const btn = document.querySelector('.search-btn');
-            const input = document.getElementById('searchInput').value;
-            
-            if(input.trim() === '') {
-                alert('اكتب المشكلة الأول يا هندسة!');
-                return;
-            }
-
-            // حركة تحميل وهمية
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحليل...';
-            btn.style.opacity = '0.8';
-
-            setTimeout(() => {
-                btn.innerHTML = 'ابحث عن الحل';
-                btn.style.opacity = '1';
-                document.getElementById('solution-sheet').style.display = 'block';
-                // السكرول لتحت عشان يشوف النتيجة
-                document.getElementById('solution-sheet').scrollIntoView({ behavior: 'smooth' });
-            }, 1500); // بيحمل لمدة ثانية ونص وبعدين يظهر النتيجة
-        }
-    </script>
-
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-   <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="script.js"></script>
 </body>
 </html>

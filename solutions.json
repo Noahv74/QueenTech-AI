@@ -1,0 +1,122 @@
+[
+    {
+        "model": "a54",
+        "title": "تخطي حماية FRP لجهاز Samsung A54 (U5)",
+        "warning": "يحتاج هذا الموديل إلى Test Point ودقة في التعامل مع نقط الـ EDL.",
+        "steps": [
+            "فك ظهر الجهاز للوصول لنقاط الـ Test Point.",
+            "استخدم كابل EDL أصلي لضمان استقرار التفليش.",
+            "افتح أداة UnlockTool واختار خانة Samsung ثم Eraser FRP.",
+            "وصل النقاط بملقاط (Tweezers) ثم وصل الكابل بالكمبيوتر."
+        ],
+        "files": ["صورة نقاط الـ Test Point", "ملف الـ Loader الخاص بـ A54"]
+    },
+    {
+        "model": "note 10",
+        "title": "حل مشكلة Mi Account لجهاز Xiaomi Note 10 (Sunny)",
+        "warning": "هذا الحل يحتاج لفك الظهر وعمل Test Point.",
+        "steps": [
+            "تعريف الجهاز في وضع الـ Qualcomm HS-USB QDLoader 9008.",
+            "استخدام أداة MCT أو UnlockTool.",
+            "اختيار موديل Note 10 وضغط Disable Mi Cloud.",
+            "بعد الفتح، لا تقم بتوصيل الواي فاي قبل عمل Disable OTA Updates."
+        ],
+        "files": ["صورة Test Point Note 10", "ملف Disable OTA"]
+    },
+    {
+        "model": "a10s",
+        "title": "إصلاح السيريال (IMEI) لجهاز Samsung A10s معالج MTK",
+        "warning": "تأكد من أن الجهاز يحمل روم هندسي (Combination) أو روت.",
+        "steps": [
+            "عمل Unlock Bootloader للجهاز.",
+            "تفعيل الـ ADB من خيارات المطور.",
+            "استخدام أداة Chimera أو Pandora Box.",
+            "كتابة السيريال الجديد وعمل Repair Network."
+        ],
+        "files": ["روم Combination A10s", "ملف NV RAM الأصلي"]
+    },
+    {
+        "model": "f11",
+        "title": "تخطي حماية Oppo F11 Pro (FRP)",
+        "warning": "هذا الموديل يحتاج مهارة في وضع الـ Meta Mode.",
+        "steps": [
+            "إطفاء الجهاز تماماً.",
+            "الضغط على زرار رفع الصوت وخفض الصوت معاً وتوصيل الكابل.",
+            "استخدام أداة SP Flash Tool أو UnlockTool.",
+            "اختيار خانة Oppo ثم Safe Format + FRP."
+        ],
+        "files": ["تعريفات Oppo Preloader", "ملف DA المتوافق"]
+    },
+    {
+        "model": "y9",
+        "title": "حل مشكلة Huawei Y9 2019 (HUAWEI ID)",
+        "warning": "يحتاج إلى كابل Huawei 1.0 أو Test Point.",
+        "steps": [
+            "توصيل الجهاز في وضع الـ Fastboot.",
+            "تحويل الجهاز لوضع USB COM 1.0 عن طريق الـ Test Point.",
+            "استخدام أداة Sigma Key أو EFT Pro.",
+            "اختيار خانة Kirin 710 وعمل Remove FRP/Huawei ID."
+        ],
+        "files": ["مخطط Test Point Y9", "تعريفات Huawei 1.0"]
+    },
+    {
+        "model": "reno 4",
+        "title": "حل مشكلة Bootloop في Oppo Reno 4 (Qualcomm)",
+        "warning": "هذا الحل يمسح جميع بيانات المستخدم.",
+        "steps": [
+            "تحميل الفلاشة الرسمية (OFP) المتوافقة مع منطقتك.",
+            "استخدام أداة MSM Download Tool مع التفعيل.",
+            "توصيل الجهاز بوضع الـ EDL (Volume Up + Down).",
+            "ضغط Start والانتظار حتى انتهاء شريط التحميل الأخضر."
+        ],
+        "files": ["رابط فلاشة Reno 4 الرسمية", "MSM Download Tool"]
+    },
+    {
+        "model": "iphone x",
+        "title": "تخطي iCloud Activation Lock (iPhone X)",
+        "warning": "يعمل فقط على إصدارات iOS 12 حتى 14.8 (Checkm8).",
+        "steps": [
+            "عمل Jailbreak للجهاز باستخدام Checkra1n.",
+            "توصيل الجهاز بالماك أو ويندوز (باستخدام Linux USB).",
+            "استخدام أداة iFrpfile أو LPro.",
+            "ضغط Bypass Hello Screen والانتظار حتى إعادة التشغيل."
+        ],
+        "files": ["نسخة Checkra1n ISO", "أداة iFrpfile Windows"]
+    },
+    {
+        "model": "v20",
+        "title": "حل مشكلة الـ Demo لجهاز Vivo V20",
+        "warning": "تحتاج لتفعيل وضع الـ ADB أولاً.",
+        "steps": [
+            "الدخول للمكالمات الطارئة وطلب كود تفعيل الـ Dev Options.",
+            "فتح أداة UnlockTool واختيار Vivo.",
+            "البحث عن V20 وضغط Remove Demo.",
+            "سيعيد الجهاز التشغيل ويختفي وضع الـ Demo."
+        ],
+        "files": ["أكواد تفعيل الـ ADB Vivo", "تعريفات Vivo V20"]
+    },
+    {
+        "model": "k50",
+        "title": "إصلاح بوت (Dead Boot) لشاومي Redmi K50",
+        "warning": "خطير جداً! يحتاج لملف Scatter معالج Dimensity.",
+        "steps": [
+            "فتح الجهاز وتوصيل البطارية.",
+            "استخدام أداة سحب ملفات الـ Dump (مثل Pandora).",
+            "كتابة ملف الـ Preloader والـ Boot 1/2.",
+            "عمل Flash للروم الرسمي بعد إصلاح البوت."
+        ],
+        "files": ["ملف بوت K50 الأصلي", "فلاشة Fastboot الرسمية"]
+    },
+    {
+        "model": "a30",
+        "title": "تخطي حماية سامسونج A30 (U4) ثغرة المتصفح",
+        "warning": "تأكد من وجود إنترنت سريع وشريحة مقفولة PIN.",
+        "steps": [
+            "توصيل الواي فاي والوصول لشاشة الـ PIN.",
+            "استخدام أداة SamFirm لفتح اليوتيوب.",
+            "الدخول لموقع Galaxy Store وتحميل Alliance Shield.",
+            "تفعيل الـ Knox وعمل Wipe لبيانات الـ FRP."
+        ],
+        "files": ["برنامج SamFirm Tool", "رابط تطبيق Alliance Shield"]
+    }
+]

@@ -18,7 +18,7 @@
         
         body { font-family: 'Cairo', sans-serif; background-color: var(--bg-color); color: #333; scroll-behavior: smooth; }
 
-        /* اللوجو الجديد المرسوم بالـ CSS (مفيش صور هتبوظ تاني) */
+        /* اللوجو */
         .q-logo {
             background: linear-gradient(135deg, var(--royal-blue), #004080);
             color: var(--gold-accent);
@@ -39,7 +39,18 @@
         .navbar { background-color: white !important; border-bottom: 3px solid var(--gold-accent); padding: 12px 0; }
         .nav-link { color: var(--royal-blue) !important; font-weight: 600; transition: 0.3s; font-size: 1.1rem; }
         .nav-link:hover { color: var(--gold-accent) !important; }
-        .credits-badge { background-color: var(--gold-accent); color: white; padding: 6px 20px; border-radius: 20px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        /* الشارات (Badges) */
+        .credits-badge { 
+            background: linear-gradient(90deg, var(--royal-blue), #004080); 
+            color: white; 
+            padding: 8px 20px; 
+            border-radius: 50px; 
+            font-weight: 800; 
+            border: 2px solid var(--gold-accent); 
+            white-space: nowrap; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
 
         /* الهيرو */
         .hero-section {
@@ -48,67 +59,49 @@
             color: white; padding: 100px 0; border-bottom: 5px solid var(--gold-accent);
         }
 
-        /* صندوق البحث الذكي */
+        /* صندوق البحث وقائمة الاقتراحات */
         .search-wrapper { max-width: 750px; margin: 0 auto; position: relative; }
-        
-        .search-box {
-            position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-radius: 50px;
-            background: white; padding: 8px; display: flex; z-index: 1000;
-        }
-        .search-input {
-            border: none; border-radius: 50px; padding: 15px 50px 15px 25px;
-            font-size: 1.2rem; width: 100%; outline: none; background: transparent; color: var(--royal-blue); font-weight: 600;
-        }
-        .search-btn {
-            background-color: var(--gold-accent); color: white; border: none; border-radius: 50px;
-            padding: 10px 35px; font-weight: bold; font-size: 1.1rem; transition: 0.3s; white-space: nowrap;
-        }
+        .search-box { position: relative; display: flex; z-index: 1000; background: white; padding: 8px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .search-input { border: none; border-radius: 50px; padding: 15px 50px 15px 25px; font-size: 1.2rem; width: 100%; outline: none; background: transparent; color: var(--royal-blue); font-weight: 600; }
+        .search-btn { background-color: var(--gold-accent); color: white; border: none; border-radius: 50px; padding: 10px 35px; font-weight: bold; font-size: 1.1rem; transition: 0.3s; white-space: nowrap; }
         .search-btn:hover { background-color: #8e740d; }
 
-        /* حل مشكلة تداخل الـ Autocomplete (كارت طاير منفصل) */
         .autocomplete-items {
-            position: absolute; 
-            z-index: 999; 
-            top: calc(100% + 15px); /* بيبعد عن صندوق البحث بـ 15 بيكسل عشان ميدخلوش في بعض */
-            left: 15px; 
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 15px;
             right: 15px;
-            border-radius: 15px; 
-            overflow-y: auto; 
-            max-height: 260px; 
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            background: #fff; 
+            z-index: 999;
+            background: #fff;
+            border-radius: 15px;
+            border: 1px solid #eee;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            max-height: 300px;
+            overflow-y: auto;
             text-align: right;
-            border: 2px solid var(--gold-accent);
+            display: none;
         }
         .autocomplete-items div { padding: 15px 20px; cursor: pointer; border-bottom: 1px solid #f1f1f1; font-weight: 700; color: var(--royal-blue); transition: 0.2s; }
         .autocomplete-items div:hover { background-color: #f8faff; color: var(--gold-accent); padding-right: 25px; }
 
         /* الفلاتر السريعة */
         .quick-filters { margin-top: 30px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        .filter-chip {
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); padding: 8px 15px; border-radius: 20px;
-            font-size: 0.9rem; color: white; cursor: pointer; transition: 0.2s;
-        }
+        .filter-chip { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; color: white; cursor: pointer; transition: 0.2s; }
         .filter-chip:hover { background: var(--gold-accent); border-color: var(--gold-accent); }
 
         /* كارت الحل */
         #solution-sheet { display: none; margin-top: -30px; position: relative; z-index: 10; padding-bottom: 50px; animation: fadeIn 0.5s; }
         .solution-card { background: white; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); padding: 40px; border-top: 5px solid var(--gold-accent); text-align: right;}
         .warning-box { background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; border-right: 4px solid #ffeeba; margin-bottom: 20px; font-weight: 600;}
-        .step-item { margin-bottom: 15px; font-size: 1.1rem; }
-        .step-number { background: var(--royal-blue); color: white; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem; margin-left: 10px; }
-
+        
         /* أقسام الموقع */
         .card-custom { border: none; border-radius: 15px; transition: 0.4s; background: white; }
         .card-custom:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,32,74,0.15); }
         .service-icon { color: var(--royal-blue); font-size: 3rem; margin-bottom: 15px; }
         #contact { background-color: var(--royal-blue) !important; color: white; padding: 80px 0; border-top: 5px solid var(--gold-accent); }
         
-        .whatsapp-float {
-            position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px; background-color: #25d366; color: #FFF;
-            border-radius: 50px; text-align: center; font-size: 30px; box-shadow: 2px 5px 15px rgba(0,0,0,0.3);
-            z-index: 1000; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s;
-        }
+        /* أيقونة الواتساب */
+        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px; background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 30px; box-shadow: 2px 5px 15px rgba(0,0,0,0.3); z-index: 1000; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
         .whatsapp-float:hover { transform: scale(1.1); color: white; }
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -125,7 +118,8 @@
                 </button>
                 <div class="credits-badge">
                     <i class="fas fa-robot me-2 text-warning"></i> Q-TECH AGENT
-             </div>
+                </div>
+            </div>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto me-auto text-center">
@@ -160,9 +154,9 @@
             </div>
 
             <div class="quick-filters">
-                <span class="filter-chip" onclick="setSearch('a54')"><i class="fas fa-microchip text-warning"></i> Samsung A54</span>
-                <span class="filter-chip" onclick="setSearch('note 10')"><i class="fas fa-unlock text-danger"></i> Mi Account</span>
-                <span class="filter-chip" onclick="setSearch('iphone')"><i class="fab fa-apple text-light"></i> iCloud Bypass</span>
+                <span class="filter-chip" onclick="setSearch('تخطي حماية Samsung A54')"><i class="fas fa-microchip text-warning"></i> Samsung A54</span>
+                <span class="filter-chip" onclick="setSearch('فك حساب شاومي Note 10')"><i class="fas fa-unlock text-danger"></i> Mi Account</span>
+                <span class="filter-chip" onclick="setSearch('تخطي أيكلاود iPhone 11')"><i class="fab fa-apple text-light"></i> iCloud Bypass</span>
             </div>
         </div>
     </header>
@@ -234,6 +228,102 @@
     <a href="https://wa.me/971563373437" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    
+    <script>
+        // قاعدة بيانات تجريبية للمشاكل والحلول
+        const techDatabase = [
+            { keyword: "تخطي حماية Samsung A54", solution: "لتخطي حماية FRP لجهاز Samsung A54: قم بتوصيل الهاتف بوضع Test Mode عبر الكود *#0*# واستخدم أداة مثل SamFw لإزالة الحماية بنقرة واحدة." },
+            { keyword: "فك حساب شاومي Note 10", solution: "لفك حساب Mi Account لجهاز Note 10: يفضل استخدام سيرفر رسمي لتجنب قفل الهاتف مجدداً عند الاتصال بالإنترنت، أو استخدام أداة UnlockTool بوضع EDL." },
+            { keyword: "تخطي أيكلاود iPhone 11", solution: "عملية تخطي iCloud لأجهزة iPhone 11 مدعومة الآن عبر أدوات مثل iRemoval Pro مع شبكة شغالة، تتطلب تسجيل السيريال ودفع الرسوم الخاصة بالخدمة." },
+            { keyword: "اصلاح بوت Poco X3", solution: "مشكلة الموت المفاجئ في Poco X3 غالباً هاردوير (معالج وذاكرة)، لكن يمكن تجربة تفليش روم رسمي عبر وضع EDL كخطوة أولى." }
+        ];
+
+        const searchInput = document.getElementById("searchInput");
+        const autocompleteList = document.getElementById("autocomplete-list");
+        const solutionSheet = document.getElementById("solution-sheet");
+
+        // وظيفة الفلاتر السريعة
+        function setSearch(text) {
+            searchInput.value = text;
+            autocompleteList.style.display = 'none'; // اخفاء القائمة
+            simulateSearch(); // تشغيل البحث فوراً
+        }
+
+        // عرض الاقتراحات أثناء الكتابة
+        searchInput.addEventListener("input", function() {
+            const value = this.value.toLowerCase();
+            autocompleteList.innerHTML = "";
+            
+            if (!value) {
+                autocompleteList.style.display = 'none';
+                return;
+            }
+
+            const filtered = techDatabase.filter(item => item.keyword.toLowerCase().includes(value));
+            
+            if (filtered.length > 0) {
+                autocompleteList.style.display = 'block';
+                filtered.forEach(item => {
+                    const div = document.createElement("div");
+                    div.innerHTML = `<i class="fas fa-search me-2 text-muted"></i> ` + item.keyword;
+                    div.onclick = function() {
+                        setSearch(item.keyword);
+                    };
+                    autocompleteList.appendChild(div);
+                });
+            } else {
+                autocompleteList.style.display = 'none';
+            }
+        });
+
+        // إخفاء القائمة عند الضغط في أي مكان خارجها
+        document.addEventListener("click", function (e) {
+            if (e.target !== searchInput && e.target !== autocompleteList) {
+                autocompleteList.style.display = 'none';
+            }
+        });
+
+        // وظيفة البحث وعرض النتيجة
+        function simulateSearch() {
+            const query = searchInput.value.trim();
+            if (!query) return;
+
+            // إخفاء القائمة والبحث
+            autocompleteList.style.display = 'none';
+            
+            // البحث في قاعدة البيانات
+            const result = techDatabase.find(item => item.keyword.toLowerCase() === query.toLowerCase());
+
+            const resultText = result ? result.solution : "عفواً، لم نتمكن من العثور على حل فوري لهذه المشكلة في قاعدة البيانات. يرجى التواصل عبر الواتساب للحصول على الدعم.";
+
+            // إظهار كارت الحل
+            solutionSheet.style.display = "block";
+            solutionSheet.innerHTML = `
+                <div class="solution-card">
+                    <h3 class="fw-bold mb-3" style="color: var(--royal-blue);">
+                        <i class="fas fa-check-circle text-success me-2"></i> نتيجة البحث: ${query}
+                    </h3>
+                    <div class="warning-box">
+                        <i class="fas fa-exclamation-triangle me-2"></i> تنبيه: قم بأخذ نسخة احتياطية من بيانات العميل قبل البدء بأي عملية سوفتوير.
+                    </div>
+                    <p class="fs-5 lh-lg">${resultText}</p>
+                    <button class="btn btn-outline-primary mt-3" onclick="document.getElementById('solution-sheet').style.display='none'; document.getElementById('searchInput').value='';">
+                        <i class="fas fa-times me-2"></i> إغلاق النتيجة
+                    </button>
+                </div>
+            `;
+
+            // عمل Scroll ناعم لحد النتيجة
+            solutionSheet.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // تشغيل البحث عند الضغط على زر Enter
+        searchInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                simulateSearch();
+            }
+        });
+    </script>
 </body>
 </html>

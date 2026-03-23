@@ -1,33 +1,42 @@
-/* تنسيق قائمة الاقتراحات (Autocomplete) */
-.search-box { position: relative; } /* مهم جداً عشان القائمة تنزل تحتها مظبوط */
+/* حل تداخل البحث وقائمة الاقتراحات (Autocomplete) */
+.search-wrapper { 
+    position: relative; 
+}
+.search-box { 
+    position: relative; 
+}
+
 .autocomplete-items {
     position: absolute;
-    border: 1px solid #d4d4d4;
-    border-top: none;
-    z-index: 99;
-    top: 100%;
-    left: 0;
-    right: 0;
-    border-radius: 0 0 25px 25px;
-    overflow: hidden;
-    box-shadow: 0 15px 30px rgba(0,32,74,0.15);
+    top: calc(100% + 12px); /* بيبعد عن السيرش بار بمسافة كافية عشان التداخل */
+    left: 15px;
+    right: 15px;
+    z-index: 999;
     background: #fff;
+    border-radius: 15px; /* حواف دائرية عصرية */
+    border: 1px solid #eee;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     max-height: 300px;
     overflow-y: auto; /* عشان لو النتايج كتير يعمل سكرول */
 }
-.credits-badge { 
-    background: linear-gradient(90deg, var(--royal-blue), #004080); /* لون متدرج شيك */
-    color: white; 
-    padding: 8px 20px; 
-    border-radius: 50px; /* شكل بيضاوي حتة واحدة */
-    font-weight: 800; 
-    border: 2px solid var(--gold-accent); /* برواز ذهبي يحددها */
-    white-space: nowrap; /* عشان الكلام ميفصلش على سطرين */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
+
 .autocomplete-items div:hover {
     background-color: #f8faff;
     color: var(--gold-accent);
+} /* القوس اللي كان ناقص */
+
+/* تنسيقات الشارات (Badges) */
+.credits-badge { 
+    background: linear-gradient(90deg, var(--royal-blue), #004080); 
+    color: white; 
+    padding: 8px 20px; 
+    border-radius: 50px; 
+    font-weight: 800; 
+    border: 2px solid var(--gold-accent); 
+    white-space: nowrap; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
 .q-agent-badge {
     display: inline-flex;
     align-items: center;
@@ -41,17 +50,3 @@
     white-space: nowrap;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-
-/* حل تداخل البحث (Autocomplete) */
-.search-wrapper { position: relative; }
-.autocomplete-items {
-    position: absolute;
-    top: calc(100% + 12px); /* بيبعد عن السيرش بار بمسافة كافية */
-    left: 15px;
-    right: 15px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-    z-index: 999;
-    border: 1px solid #eee;
-}}

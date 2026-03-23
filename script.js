@@ -1,111 +1,94 @@
-let solutionsData = [];
+// قاعدة بيانات تجريبية للمشاكل والحلول
+const techDatabase = [
+    { keyword: "تخطي حماية Samsung A54", solution: "لتخطي حماية FRP لجهاز Samsung A54: قم بتوصيل الهاتف بوضع Test Mode عبر الكود *#0*# واستخدم أداة مثل SamFw لإزالة الحماية بنقرة واحدة." },
+    { keyword: "فك حساب شاومي Note 10", solution: "لفك حساب Mi Account لجهاز Note 10: يفضل استخدام سيرفر رسمي لتجنب قفل الهاتف مجدداً عند الاتصال بالإنترنت، أو استخدام أداة UnlockTool بوضع EDL." },
+    { keyword: "تخطي أيكلاود iPhone 11", solution: "عملية تخطي iCloud لأجهزة iPhone 11 مدعومة الآن عبر أدوات مثل iRemoval Pro مع شبكة شغالة، تتطلب تسجيل السيريال ودفع الرسوم الخاصة بالخدمة." },
+    { keyword: "اصلاح بوت Poco X3", solution: "مشكلة الموت المفاجئ في Poco X3 غالباً هاردوير (معالج وذاكرة)، لكن يمكن تجربة تفليش روم رسمي عبر وضع EDL كخطوة أولى." }
+];
 
-// تحميل الداتا أول ما الصفحة تفتح
-window.onload = async function() {
-    try {
-        const response = await fetch('solutions.json');
-        solutionsData = await response.json();
-    } catch (error) {
-        console.error("مشكلة في تحميل الداتا:", error);
-    }
-};
+const searchInput = document.getElementById("searchInput");
+const autocompleteList = document.getElementById("autocomplete-list");
+const solutionSheet = document.getElementById("solution-sheet");
 
-const searchInput = document.getElementById('searchInput');
-const autocompleteList = document.getElementById('autocomplete-list');
-
-// مراقبة الكتابة في شريط البحث
-searchInput.addEventListener('input', function() {
-    const val = this.value.toLowerCase().trim();
-    autocompleteList.innerHTML = ''; 
-    
-    if (!val) {
-        document.getElementById('solution-sheet').style.display = 'none';
-        return;
-    }
-
-    // فلترة النتايج
-    const matches = solutionsData.filter(item => 
-        item.model.toLowerCase().includes(val) || 
-        item.title.toLowerCase().includes(val)
-    );
-
-    // بناء القائمة
-    matches.forEach(match => {
-        const div = document.createElement('div');
-        div.innerHTML = `<i class="fas fa-mobile-alt me-2 text-secondary"></i> <strong>${match.model.toUpperCase()}</strong> - ${match.title}`;
-        
-        div.addEventListener('click', function() {
-            searchInput.value = match.model; 
-            autocompleteList.innerHTML = ''; 
-            displaySolution(match); 
-        });
-        autocompleteList.appendChild(div);
-    });
-});
-
-// إخفاء القائمة لو ضغط بره
-document.addEventListener('click', function(e) {
-    if (e.target !== searchInput) {
-        autocompleteList.innerHTML = '';
-    }
-});
-
+// وظيفة الفلاتر السريعة
 function setSearch(text) {
     searchInput.value = text;
-    simulateSearch();
+    autocompleteList.style.display = 'none'; // اخفاء القائمة
+    simulateSearch(); // تشغيل البحث فوراً
 }
 
-function simulateSearch() {
-    const val = searchInput.value.toLowerCase().trim();
-    const btn = document.querySelector('.search-btn');
-
-    if (!val) {
-        alert("اكتب اسم الموديل الأول يا هندسة!");
+// عرض الاقتراحات أثناء الكتابة
+searchInput.addEventListener("input", function() {
+    const value = this.value.toLowerCase();
+    autocompleteList.innerHTML = "";
+    
+    if (!value) {
+        autocompleteList.style.display = 'none';
         return;
     }
+
+    const filtered = techDatabase.filter(item => item.keyword.toLowerCase().includes(value));
     
-    const match = solutionsData.find(item => 
-        item.model.toLowerCase().includes(val) || item.title.toLowerCase().includes(val)
-    );
+    if (filtered.length > 0) {
+        autocompleteList.style.display = 'block';
+        filtered.forEach(item => {
+            const div = document.createElement("div");
+            div.innerHTML = `<i class="fas fa-search me-2 text-muted"></i> ` + item.keyword;
+            div.onclick = function() {
+                setSearch(item.keyword);
+            };
+            autocompleteList.appendChild(div);
+        });
+    } else {
+        autocompleteList.style.display = 'none';
+    }
+});
 
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري البحث...';
+// إخفاء القائمة عند الضغط في أي مكان خارجها
+document.addEventListener("click", function (e) {
+    if (e.target !== searchInput && e.target !== autocompleteList) {
+        autocompleteList.style.display = 'none';
+    }
+});
 
-    setTimeout(() => {
-        btn.innerHTML = 'ابحث عن الحل';
-        if (match) {
-            autocompleteList.innerHTML = '';
-            displaySolution(match);
-        } else {
-            alert('الموديل ده لسه مش متسجل في الصيدلية يا هندسة.');
-            document.getElementById('solution-sheet').style.display = 'none';
-        }
-    }, 800);
-}
+// وظيفة البحث وعرض النتيجة
+function simulateSearch() {
+    const query = searchInput.value.trim();
+    if (!query) return;
 
-function displaySolution(data) {
-    const solutionSheet = document.getElementById('solution-sheet');
+    // إخفاء القائمة والبحث
+    autocompleteList.style.display = 'none';
     
+    // البحث في قاعدة البيانات
+    const result = techDatabase.find(item => item.keyword.toLowerCase() === query.toLowerCase());
+
+    const resultText = result ? result.solution : "عفواً، لم نتمكن من العثور على حل فوري لهذه المشكلة في قاعدة البيانات. يرجى التواصل مع الدعم الفني.";
+
+    // إظهار كارت الحل
+    solutionSheet.style.display = "block";
     solutionSheet.innerHTML = `
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="solution-card">
-                    <h3 class="fw-bold mb-3" style="color: var(--royal-blue);"><i class="fas fa-check-circle text-success"></i> تقرير الحل: ${data.title}</h3>
-                    <div class="warning-box">
-                        <i class="fas fa-exclamation-triangle"></i> <strong>تحذير للفني:</strong> ${data.warning}
-                    </div>
-                    <h5 class="fw-bold mt-4 mb-3">خطوات العمل (لغة الصنايعية):</h5>
-                    ${data.steps.map((step, index) => `
-                        <div class="step-item"><span class="step-number">${index + 1}</span> ${step}</div>
-                    `).join('')}
-                    <hr class="my-4">
-                    <h5 class="fw-bold mb-3">الملفات والأدوات المطلوبة:</h5>
-                    ${data.files.map(file => `
-                        <a href="#" class="btn btn-outline-primary me-2 mb-2"><i class="fas fa-download"></i> ${file}</a>
-                    `).join('')}
-                </div>
+        <div class="solution-card">
+            <h3 class="fw-bold mb-3" style="color: var(--royal-blue);">
+                <i class="fas fa-check-circle text-success me-2"></i> نتيجة البحث: ${query}
+            </h3>
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle me-2"></i> تنبيه: قم بأخذ نسخة احتياطية من بيانات العميل قبل البدء بأي عملية سوفتوير.
             </div>
+            <p class="fs-5 lh-lg">${resultText}</p>
+            <button class="btn btn-outline-primary mt-3" onclick="document.getElementById('solution-sheet').style.display='none'; searchInput.value='';">
+                <i class="fas fa-times me-2"></i> إغلاق النتيجة
+            </button>
         </div>
     `;
-    solutionSheet.style.display = 'block';
-    solutionSheet.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // عمل Scroll ناعم لحد النتيجة
+    solutionSheet.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
+
+// تشغيل البحث عند الضغط على زر Enter
+searchInput.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        simulateSearch();
+    }
+});

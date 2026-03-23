@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Queen Tech | المساعد الذكي لفنيي السوفتوير</title>
+    <title>Q-Tech AI | صيدلية السوفتوير</title>
     
-    <link rel="icon" type="image/png" href="images/logo.png" />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,142 +13,227 @@
         :root { 
             --royal-blue: #00204a; 
             --gold-accent: #b59410; 
-            --bg-color: #f4f7f6;
+            --bg-color: #f8faff;
         }
         
-        body { 
-            font-family: 'Cairo', sans-serif; 
-            background-color: var(--bg-color); 
-            color: #333;
-        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--bg-color); color: #333; scroll-behavior: smooth; }
 
-        /* المنيو */
-        .navbar { background-color: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 10px 0; }
-        .logo-img { height: 50px; width: auto; }
-        .credits-badge { background-color: var(--royal-blue); color: white; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;}
-        .credits-badge i { color: var(--gold-accent); }
-
-        /* منطقة البحث */
-        .search-container { margin-top: 8vh; text-align: center; }
-        .search-title { color: var(--royal-blue); font-weight: 800; font-size: 2.5rem; margin-bottom: 10px; }
-        .search-subtitle { color: #666; margin-bottom: 30px; font-size: 1.1rem; }
-        
-        /* صندوق البحث وقائمة الاقتراحات */
-        .search-wrapper { max-width: 700px; margin: 0 auto; position: relative; }
-        .search-box {
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,32,74,0.1);
-            border-radius: 50px;
-            background: white;
-            padding: 5px;
+        /* اللوجو الجديد المرسوم بالـ CSS (مفيش صور هتبوظ تاني) */
+        .q-logo {
+            background: linear-gradient(135deg, var(--royal-blue), #004080);
+            color: var(--gold-accent);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
             display: flex;
-            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 2px solid var(--gold-accent);
+            transform: rotate(-5deg);
+            transition: 0.3s ease-in-out;
+        }
+        .q-logo:hover { transform: rotate(0deg) scale(1.1); box-shadow: 0 6px 15px rgba(181, 148, 16, 0.4); }
+
+        .navbar { background-color: white !important; border-bottom: 3px solid var(--gold-accent); padding: 12px 0; }
+        .nav-link { color: var(--royal-blue) !important; font-weight: 600; transition: 0.3s; font-size: 1.1rem; }
+        .nav-link:hover { color: var(--gold-accent) !important; }
+        .credits-badge { background-color: var(--gold-accent); color: white; padding: 6px 20px; border-radius: 20px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+        /* الهيرو */
+        .hero-section {
+            background: linear-gradient(rgba(0, 32, 74, 0.9), rgba(0, 32, 74, 0.9)), 
+                        url('https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white; padding: 100px 0; border-bottom: 5px solid var(--gold-accent);
+        }
+
+        /* صندوق البحث الذكي */
+        .search-wrapper { max-width: 750px; margin: 0 auto; position: relative; }
+        
+        .search-box {
+            position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-radius: 50px;
+            background: white; padding: 8px; display: flex; z-index: 1000;
         }
         .search-input {
-            border: none;
-            border-radius: 50px;
-            padding: 15px 25px 15px 50px;
-            font-size: 1.1rem;
-            width: 100%;
-            outline: none;
-            background: transparent;
+            border: none; border-radius: 50px; padding: 15px 50px 15px 25px;
+            font-size: 1.2rem; width: 100%; outline: none; background: transparent; color: var(--royal-blue); font-weight: 600;
         }
         .search-btn {
-            background-color: var(--gold-accent);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 10px 30px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: 0.3s;
-            white-space: nowrap;
+            background-color: var(--gold-accent); color: white; border: none; border-radius: 50px;
+            padding: 10px 35px; font-weight: bold; font-size: 1.1rem; transition: 0.3s; white-space: nowrap;
         }
         .search-btn:hover { background-color: #8e740d; }
 
-        /* تنسيق الـ Autocomplete السحري */
+        /* حل مشكلة تداخل الـ Autocomplete (كارت طاير منفصل) */
         .autocomplete-items {
-            position: absolute;
-            border: 1px solid #d4d4d4;
-            border-top: none;
-            z-index: 99;
-            top: 55px; /* عشان تنزل تحت الصندوق بالظبط */
-            left: 20px;
-            right: 20px;
-            border-radius: 0 0 20px 20px;
-            overflow-y: auto;
-            max-height: 250px;
-            box-shadow: 0 15px 30px rgba(0,32,74,0.15);
-            background: #fff;
+            position: absolute; 
+            z-index: 999; 
+            top: calc(100% + 15px); /* بيبعد عن صندوق البحث بـ 15 بيكسل عشان ميدخلوش في بعض */
+            left: 15px; 
+            right: 15px;
+            border-radius: 15px; 
+            overflow-y: auto; 
+            max-height: 260px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            background: #fff; 
             text-align: right;
+            border: 2px solid var(--gold-accent);
         }
-        .autocomplete-items div {
-            padding: 15px 20px;
-            cursor: pointer;
-            border-bottom: 1px solid #f1f1f1;
-            font-weight: 600;
-            color: var(--royal-blue);
-            transition: 0.2s;
-        }
-        .autocomplete-items div:hover {
-            background-color: #f8faff;
-            color: var(--gold-accent);
-        }
+        .autocomplete-items div { padding: 15px 20px; cursor: pointer; border-bottom: 1px solid #f1f1f1; font-weight: 700; color: var(--royal-blue); transition: 0.2s; }
+        .autocomplete-items div:hover { background-color: #f8faff; color: var(--gold-accent); padding-right: 25px; }
 
         /* الفلاتر السريعة */
-        .quick-filters { margin-top: 35px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .quick-filters { margin-top: 30px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .filter-chip {
-            background: white; border: 1px solid #ddd; padding: 8px 15px; border-radius: 20px;
-            font-size: 0.9rem; color: #555; cursor: pointer; transition: 0.2s;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); padding: 8px 15px; border-radius: 20px;
+            font-size: 0.9rem; color: white; cursor: pointer; transition: 0.2s;
         }
-        .filter-chip:hover { border-color: var(--royal-blue); color: var(--royal-blue); background: #eef2f9; }
+        .filter-chip:hover { background: var(--gold-accent); border-color: var(--gold-accent); }
 
         /* كارت الحل */
-        #solution-sheet { display: none; margin-top: 40px; animation: fadeIn 0.5s; padding-bottom: 50px; }
-        .solution-card { background: white; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); padding: 30px; border-top: 5px solid var(--royal-blue); text-align: right;}
+        #solution-sheet { display: none; margin-top: -30px; position: relative; z-index: 10; padding-bottom: 50px; animation: fadeIn 0.5s; }
+        .solution-card { background: white; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); padding: 40px; border-top: 5px solid var(--gold-accent); text-align: right;}
         .warning-box { background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; border-right: 4px solid #ffeeba; margin-bottom: 20px; font-weight: 600;}
         .step-item { margin-bottom: 15px; font-size: 1.1rem; }
-        .step-number { background: var(--royal-blue); color: white; width: 25px; height: 25px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem; margin-left: 10px; }
+        .step-number { background: var(--royal-blue); color: white; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem; margin-left: 10px; }
+
+        /* أقسام الموقع */
+        .card-custom { border: none; border-radius: 15px; transition: 0.4s; background: white; }
+        .card-custom:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,32,74,0.15); }
+        .service-icon { color: var(--royal-blue); font-size: 3rem; margin-bottom: 15px; }
+        #contact { background-color: var(--royal-blue) !important; color: white; padding: 80px 0; border-top: 5px solid var(--gold-accent); }
         
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .whatsapp-float {
+            position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px; background-color: #25d366; color: #FFF;
+            border-radius: 50px; text-align: center; font-size: 30px; box-shadow: 2px 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); color: white; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <nav class="navbar sticky-top">
+    <nav class="navbar navbar-expand-lg sticky-top shadow-sm">
         <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="images/logo.png" alt="Queen Tech" class="logo-img" onerror="this.src='https://via.placeholder.com/50'">
-                <span class="ms-2 fw-bold" style="color: var(--royal-blue); font-size: 1.3rem;">QUEEN TECH <span style="color: var(--gold-accent);">AI</span></span>
+            
+            <div class="d-flex align-items-center">
+                <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="credits-badge">
+                    <i class="fas fa-robot me-2 text-warning"></i> Q-TECH AGENT
+             </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto me-auto text-center">
+                    <li class="nav-item"><a class="nav-link" href="#home">الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">خدماتنا</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">طلب دعم</a></li>
+                </ul>
+            </div>
+
+            <a class="navbar-brand d-flex align-items-center m-0" href="#">
+                <span class="fw-bold me-3" style="color: var(--royal-blue); font-size: 1.5rem; letter-spacing: 1px;">Q-TECH <span style="color: var(--gold-accent);">AI</span></span>
+                <div class="q-logo">
+                    <i class="fas fa-microchip"></i>
+                </div>
             </a>
-            <div class="credits-badge"><i class="fas fa-coins me-1"></i> رصيدك: ١٥ نقطة</div>
+
         </div>
     </nav>
 
-    <div class="container search-container">
-        <h1 class="search-title">صيدلية السوفتوير</h1>
-        <p class="search-subtitle">اكتب نوع الجهاز والمشكلة، والذكاء الاصطناعي هيجيبلك الخلاصة والملفات.</p>
-
-        <div class="search-wrapper">
-            <div class="search-box">
-                <i class="fas fa-search" style="position: absolute; right: 20px; top: 22px; color: #aaa; z-index: 101;"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="مثال: تخطي حماية FRP لجهاز Samsung A54..." autocomplete="off">
-                <button class="search-btn" onclick="simulateSearch()">ابحث عن الحل</button>
+    <header id="home" class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">المساعد الذكي لفنيي <span style="color: var(--gold-accent);">السوفتوير</span></h1>
+            <p class="lead mb-5 fs-4">ابحث عن الموديل والمشكلة.. واحصل على الخلاصة فوراً.</p>
+            
+            <div class="search-wrapper">
+                <div class="search-box">
+                    <i class="fas fa-search" style="position: absolute; right: 25px; top: 22px; color: #aaa; z-index: 101;"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="مثال: تخطي حساب شاومي Note 10..." autocomplete="off">
+                    <button class="search-btn" onclick="simulateSearch()">ابحث الآن</button>
+                </div>
+                <div id="autocomplete-list" class="autocomplete-items"></div>
             </div>
-            <div id="autocomplete-list" class="autocomplete-items"></div>
-        </div>
 
-        <div class="quick-filters">
-            <span class="filter-chip" onclick="setSearch('a54')"><i class="fas fa-microchip text-primary"></i> Samsung A54</span>
-            <span class="filter-chip" onclick="setSearch('note 10')"><i class="fas fa-unlock text-danger"></i> Mi Account Note 10</span>
-            <span class="filter-chip" onclick="setSearch('iphone x')"><i class="fab fa-apple text-dark"></i> iCloud Bypass</span>
+            <div class="quick-filters">
+                <span class="filter-chip" onclick="setSearch('a54')"><i class="fas fa-microchip text-warning"></i> Samsung A54</span>
+                <span class="filter-chip" onclick="setSearch('note 10')"><i class="fas fa-unlock text-danger"></i> Mi Account</span>
+                <span class="filter-chip" onclick="setSearch('iphone')"><i class="fab fa-apple text-light"></i> iCloud Bypass</span>
+            </div>
         </div>
-    </div>
+    </header>
 
     <div class="container" id="solution-sheet"></div>
 
+    <section id="services" class="py-5 mt-5">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-5" style="color: var(--royal-blue);">خدماتنا التقنية</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card card-custom h-100 shadow-sm p-4 border-top border-4 border-primary">
+                        <i class="fas fa-mobile-alt service-icon"></i>
+                        <h5 class="fw-bold">سوفتوير الموبايل</h5>
+                        <p class="text-muted">فك حمايات، إصلاح بوت، وتفليش جميع الموديلات.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card card-custom h-100 shadow-sm p-4 border-top border-4 border-primary">
+                        <i class="fas fa-tools service-icon"></i>
+                        <h5 class="fw-bold">صيانة الهاردوير</h5>
+                        <p class="text-muted">إصلاح أعطال اللوحة الأم وتغيير الشاشات باحترافية.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card card-custom h-100 shadow-sm p-4 border-top border-4 border-primary">
+                        <i class="fas fa-video service-icon"></i>
+                        <h5 class="fw-bold">أنظمة المراقبة</h5>
+                        <p class="text-muted">تركيب وبرمجة أحدث كاميرات الـ CCTV.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card card-custom h-100 shadow-sm p-4 border-top border-4 border-primary">
+                        <i class="fas fa-network-wired service-icon"></i>
+                        <h5 class="fw-bold">الشبكات والـ IT</h5>
+                        <p class="text-muted">تأسيس شبكات الشركات وحلول الدعم الفني.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-5 mb-5 mb-md-0">
+                    <h2 class="fw-bold mb-4" style="color: var(--gold-accent);">جاهزون لخدمتك؟</h2>
+                    <p class="mb-3 fs-5"><i class="fas fa-envelope ms-3 text-warning"></i> info@queentechsolution.info</p>
+                    <p class="mb-3 fs-5"><i class="fab fa-whatsapp ms-3 text-success"></i> +971 56 337 3437</p>
+                    <p class="mb-3 fs-5"><i class="fas fa-map-marker-alt ms-3 text-primary"></i> Dubai, UAE</p>
+                </div>
+                <div class="col-md-7">
+                    <form name="contact" method="POST" data-netlify="true" class="bg-white p-5 rounded shadow text-dark">
+                        <input type="hidden" name="form-name" value="contact">
+                        <div class="mb-3"><label class="form-label fw-bold">الاسم الكريم</label><input type="text" name="name" class="form-control bg-light" required></div>
+                        <div class="mb-3"><label class="form-label fw-bold">البريد الإلكتروني</label><input type="email" name="email" class="form-control bg-light" required></div>
+                        <div class="mb-3"><label class="form-label fw-bold">كيف يمكننا مساعدتك؟</label><textarea name="message" class="form-control bg-light" rows="4" required></textarea></div>
+                        <button type="submit" class="btn search-btn w-100 shadow">إرسال الرسالة</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-white text-center py-4">
+        <p class="mb-0">&copy; 2026 Q-Tech AI Solutions. All Rights Reserved.</p>
+    </footer>
+
+    <a href="https://wa.me/971563373437" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script src="script.js"></script>
 </body>
 </html>

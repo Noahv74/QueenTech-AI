@@ -15,17 +15,43 @@
     max-height: 300px;
     overflow-y: auto; /* عشان لو النتايج كتير يعمل سكرول */
 }
-.autocomplete-items div {
-    padding: 15px 25px;
-    cursor: pointer;
-    background-color: #fff;
-    border-bottom: 1px solid #f1f1f1;
-    text-align: right;
-    font-size: 1.1rem;
-    color: var(--royal-blue);
-    font-weight: 600;
+.credits-badge { 
+    background: linear-gradient(90deg, var(--royal-blue), #004080); /* لون متدرج شيك */
+    color: white; 
+    padding: 8px 20px; 
+    border-radius: 50px; /* شكل بيضاوي حتة واحدة */
+    font-weight: 800; 
+    border: 2px solid var(--gold-accent); /* برواز ذهبي يحددها */
+    white-space: nowrap; /* عشان الكلام ميفصلش على سطرين */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 .autocomplete-items div:hover {
     background-color: #f8faff;
     color: var(--gold-accent);
+.q-agent-badge {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--royal-blue), #004080);
+    color: white;
+    padding: 6px 18px;
+    border-radius: 50px;
+    border: 2px solid var(--gold-accent);
+    font-weight: 800;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
+
+/* حل تداخل البحث (Autocomplete) */
+.search-wrapper { position: relative; }
+.autocomplete-items {
+    position: absolute;
+    top: calc(100% + 12px); /* بيبعد عن السيرش بار بمسافة كافية */
+    left: 15px;
+    right: 15px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    z-index: 999;
+    border: 1px solid #eee;
+}}
